@@ -1,0 +1,44 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="using" priority="0" />
+      <Item value="Management" priority="0" />
+      <Item value="RunPowershellScript`0" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/d:Scripts/f:Get-Website.ps1" caret="857" fromTop="34" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="1484" fromTop="25" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/d:Scripts/f:Get-Website.ps1" caret="4285" fromTop="52" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="267" fromTop="12" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="267" fromTop="23" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="267" fromTop="17" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="406" fromTop="20" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="372" fromTop="16" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="1479" fromTop="40" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="0" fromTop="0" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="1484" fromTop="25" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+</Configuration>
