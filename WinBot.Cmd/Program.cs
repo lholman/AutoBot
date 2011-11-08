@@ -7,7 +7,7 @@ namespace WinBot.Cmd
 {
     class Program
     {
-        private static string _scriptsPath = "C:\\Development\\WinBot\\WinBot.Cmd\\Scripts\\";
+        private static string _scriptsPath = Path.Combine(Environment.CurrentDirectory, "..\\..\\Scripts\\");
 
         static int Main(string[] args)
         {
@@ -63,14 +63,6 @@ namespace WinBot.Cmd
             }
         }
 
-        private static string GetPath(string appendFile)
-        {
-            
-            if (!(_scriptsPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) || _scriptsPath.EndsWith(Path.AltDirectorySeparatorChar.ToString(), StringComparison.Ordinal)))
-                _scriptsPath += Path.DirectorySeparatorChar;
-
-            return _scriptsPath + appendFile;
-        }
 
         static bool CheckCommandLine(CommandLine commandLine)
         {
@@ -117,6 +109,15 @@ namespace WinBot.Cmd
             {
                 ConsoleExtender.Info(Path.GetFileNameWithoutExtension(file));
             }
+        }
+
+        private static string GetPath(string appendFile)
+        {
+
+            if (!(_scriptsPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) || _scriptsPath.EndsWith(Path.AltDirectorySeparatorChar.ToString(), StringComparison.Ordinal)))
+                _scriptsPath += Path.DirectorySeparatorChar;
+
+            return _scriptsPath + appendFile;
         }
      }
 }
