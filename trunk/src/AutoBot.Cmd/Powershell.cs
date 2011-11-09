@@ -17,18 +17,14 @@ namespace AutoBot.Cmd
 
             using (RunspaceInvoke invoker = new RunspaceInvoke())
             {
-                // load the powershell module
                 string scriptPath = GetPath(scriptName);
-                invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
-
                 Collection<PSObject> report;
 
                 if (scriptName == "Get-Help" && command == string.Empty)
-                {
-                    // get Powershell help for the function with the same name as the module 
-                    report = invoker.Invoke(string.Format("Get-Help {0}", scriptName));
-                    return report[0].ToString();
-                }
+                    invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
+
+                if (scriptName != "Get-Help")
+                    invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
 
                 // run the Function with the same name as the module 
                 report = invoker.Invoke(string.Format("{0} {1}", scriptName, command));
