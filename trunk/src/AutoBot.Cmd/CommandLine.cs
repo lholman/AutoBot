@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections;
 
 namespace AutoBot.Cmd
 {
@@ -6,9 +6,16 @@ namespace AutoBot.Cmd
     {
         public Command GetCommand { get; private set; }
 
-        public CommandLine(string[] args)
+        public CommandLine(ArrayList args)
         {
-            GetCommand = args.Count() == 1 ? new Command(args[0], string.Empty) : new Command(args[0], args[1]);
+            GetCommand = args.Count == 1 ? new Command(args[0].ToString(), string.Empty) : new Command(args[0].ToString(), args[1].ToString());
+        }
+
+        public static bool CheckCommandLine(CommandLine commandLine)
+        {
+            //Add commandline checking, rules?
+
+            return true;
         }
 
         public enum ExitCode : int
@@ -18,7 +25,6 @@ namespace AutoBot.Cmd
             MissingResourceFile = 2,
             UnknownError = 10
         }
-
     }
 
     public class Command

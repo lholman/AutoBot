@@ -3,6 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBot.Cmd", "AutoBot.Cmd\AutoBot.Cmd.csproj", "{CB4A56E0-B916-43ED-A1D0-1EDB50270D73}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{1EFB23C7-01BD-416E-9123-CDF7D73643EC}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\Scripts\Get-Help.ps1 = ..\build\Scripts\Get-Help.ps1
+		..\build\Scripts\Get-PokedexEntry.psm1 = ..\build\Scripts\Get-PokedexEntry.psm1
+		..\build\Scripts\Get-Website.psm1 = ..\build\Scripts\Get-Website.psm1
+		..\build\Scripts\pokedex.txt = ..\build\Scripts\pokedex.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86

@@ -5,3 +5,4 @@ C:\Development\AutoBot\trunk\build\AutoBot.Cmd.exe
 C:\Development\AutoBot\trunk\build\AutoBot.Cmd.pdb
 C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\AutoBot.Cmd.exe
 C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\AutoBot.Cmd.pdb
+C:\Development\AutoBot\trunk\build\AutoBot.Cmd.exe.config

@@ -7,8 +7,49 @@
     </boolean>
   </SettingsComponent>
   <RecentFiles>
-    <RecentFiles />
-    <RecentEdits />
+    <RecentFiles>
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:ConsoleExtender.cs" caret="1298" fromTop="31" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:pokedex.txt/l:C!?Development?AutoBot?trunk?build?Scripts?pokedex.txt" caret="0" fromTop="0" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="757" fromTop="28" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Powershell.cs" caret="911" fromTop="24" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:HipChat.cs" caret="763" fromTop="0" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:CommandLine.cs" caret="1829" fromTop="16" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-PokedexEntry.psm1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-PokedexEntry.psm1" caret="0" fromTop="0" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Website.psm1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Website.psm1" caret="3786" fromTop="25" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="751" fromTop="28" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="744" fromTop="19" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="744" fromTop="7" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:HipChat.cs" caret="5048" fromTop="41" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="744" fromTop="27" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:CommandLine.cs" caret="2565" fromTop="51" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="744" fromTop="29" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="744" fromTop="31" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Powershell.cs" caret="1310" fromTop="34" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:HipChat.cs" caret="142" fromTop="4" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:CommandLine.cs" caret="646" fromTop="18" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:CommandLine.cs" caret="1120" fromTop="36" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:CommandLine.cs" caret="359" fromTop="13" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:CommandLine.cs" caret="1371" fromTop="26" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Powershell.cs" caret="931" fromTop="26" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:HipChat.cs" caret="6398" fromTop="51" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Powershell.cs" caret="884" fromTop="23" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Powershell.cs" caret="320" fromTop="12" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:HipChat.cs" caret="5302" fromTop="27" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="744" fromTop="34" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="69" fromTop="13" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Program.cs" caret="13" fromTop="0" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:Powershell.cs" caret="107" fromTop="3" />
+      <File id="CB4A56E0-B916-43ED-A1D0-1EDB50270D73/f:CommandLine.cs" caret="97" fromTop="3" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="17" fromTop="0" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="675" fromTop="11" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="1008" fromTop="30" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="527" fromTop="16" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="602" fromTop="21" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="1077" fromTop="41" />
+      <File id="1EFB23C7-01BD-416E-9123-CDF7D73643EC/f:Get-Help.ps1/l:C!?Development?AutoBot?trunk?build?Scripts?Get-Help.ps1" caret="965" fromTop="34" />
+    </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
     <NAntPath value="" />
@@ -21,4 +62,58 @@
     </NUnitInstallDir>
     <UseAddins>Never</UseAddins>
   </UnitTestRunnerNUnit>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="private" priority="0" />
+      <Item value="static" priority="0" />
+      <Item value="SetupChatConnection`0" priority="0" />
+      <Item value="XmlNode`0" priority="0" />
+      <Item value="chatCommand" priority="0" />
+      <Item value="Environment`0" priority="1" />
+      <Item value="replyTo" priority="2" />
+      <Item value="report" priority="0" />
+      <Item value="SendResponse`0" priority="1" />
+      <Item value="client" priority="1" />
+      <Item value="string" priority="3" />
+      <Item value="message" priority="0" />
+      <Item value="row" priority="0" />
+      <Item value="args" priority="1" />
+      <Item value="chatTextArgs" priority="1" />
+      <Item value="First`1" priority="0" />
+      <Item value="String`0" priority="0" />
+      <Item value="new" priority="1" />
+      <Item value="ArrayList" priority="0" />
+      <Item value="for" priority="1" />
+      <Item value="Count`1" priority="0" />
+      <Item value="arrayList" priority="1" />
+      <Item value="i" priority="0" />
+      <Item value="Type`0" priority="0" />
+      <Item value="typeof" priority="0" />
+      <Item value="using" priority="0" />
+      <Item value="AutoBot.Cmd" priority="0" />
+      <Item value="HipChat`0" priority="0" />
+      <Item value="HipChat" priority="0" />
+      <Item value="public" priority="1" />
+      <Item value="return" priority="0" />
+      <Item value="responseText" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Environment">
+      <Item value="ExitCode" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.String">
+      <Item value="Trim`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.String">
+      <Item value="Empty" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.ArrayList">
+      <Item value="Add`0" priority="0" />
+      <Item value="Count" priority="0" />
+      <Item value="ToArray`0" priority="0" />
+      <Item value="Indexer" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Object">
+      <Item value="ToString`0" priority="3" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
 </Configuration>
