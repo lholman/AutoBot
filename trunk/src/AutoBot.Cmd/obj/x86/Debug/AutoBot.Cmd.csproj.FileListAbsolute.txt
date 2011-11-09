@@ -1,0 +1,7 @@
+C:\Development\AutoBot\AutoBot.Cmd\obj\x86\Debug\WinBot.Cmd.exe
+C:\Development\AutoBot\AutoBot.Cmd\obj\x86\Debug\WinBot.Cmd.pdb
+C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Development\AutoBot\trunk\build\AutoBot.Cmd.exe
+C:\Development\AutoBot\trunk\build\AutoBot.Cmd.pdb
+C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\AutoBot.Cmd.exe
+C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\AutoBot.Cmd.pdb
