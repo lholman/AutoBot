@@ -11,12 +11,15 @@ namespace AutoBot.Cmd
 
         internal static string RunPowershellModule(string scriptName, string command)
         {
-            
+
+            if (!File.Exists(GetPath(scriptName)))
+                return "Unknown command!, try Get-Help instead";
+
             using (RunspaceInvoke invoker = new RunspaceInvoke())
             {
                 // load the powershell module
                 string scriptPath = GetPath(scriptName);
-                invoker.Invoke(string.Format("Import-Module {0}.psm1", scriptPath));
+                invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
 
                 Collection<PSObject> report;
 
@@ -35,7 +38,7 @@ namespace AutoBot.Cmd
         }
 
 
-        internal static string GetPath(string appendFile)
+        internal static string GetPath(string filenameWithoutExtension)
         {
             string path = string.Empty;
             if (!(ScriptsPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) || ScriptsPath.EndsWith(Path.AltDirectorySeparatorChar.ToString(), StringComparison.Ordinal)))
@@ -44,7 +47,7 @@ namespace AutoBot.Cmd
                 path += Path.DirectorySeparatorChar;
             }
             
-            return path + appendFile;
+            return path + filenameWithoutExtension + ".psm1";
         }
     }
 }
