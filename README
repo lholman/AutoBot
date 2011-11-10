@@ -1,21 +1,15 @@
+## Disclaimer
+
 ## AutoBot
 AutoBot is inspired by GitHub's [HUBOT](http://hubot.github.com/) however AutoBot is one for the Windows crew. 
 The main Bot is written in C# (.NET 4), his functionality and extensibility is by the addition of PowerShell modules
+which are dynamically loaded and executed at runtime.
 
 ## Getting AutoBot / Contributing
 # Setup Git
 http://help.github.com/win-set-up-git/
 # To clone the github repo
 $ git clone git@github.com:lholman/AutoBot.git
-
-## Hosting AutoBot
-http://www.appharbor.com rocks, if everything you want to do is publicly acceessible then you can host AutoBot
-at AppHarbor for free.
-# To setup and push changes in your repo to AppHarbor
-$ git remote add appharbor https://<username>@appharbor.com/<ApplicationName>.git
-$ git push appharbor master
-#To check build and deployment status
-http://appharbor.com/application/<ApplicationName>
 
 ## Scripts
 AutoBot scripts are written in [PowerShell](http://en.wikipedia.org/wiki/Windows_PowerShell)
