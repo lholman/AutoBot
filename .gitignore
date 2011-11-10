@@ -1,6 +1,7 @@
-bj/
+obj/
 bin/
 _ReSharper.*/
 *.suo
 *.user
 App.config
+build/

@@ -33,7 +33,7 @@ function Get-PokedexEntry()
 	param( $id )
 
 	# read the tab-delimited pokedex. the first line contains a title row
-	$pokedex = [System.IO.File]::ReadAllLines("C:\Development\AutoBot\trunk\build\Scripts\pokedex.txt");
+	$pokedex = [System.IO.File]::ReadAllLines("Scripts\pokedex.txt");
 
 	$index = -1
 	if( [System.Int32]::TryParse($id, [ref] $index) )
