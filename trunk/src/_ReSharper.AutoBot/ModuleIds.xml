@@ -1,4 +1,0 @@
-<Modules>
-  <Module PersistentId="CB4A56E0-B916-43ED-A1D0-1EDB50270D73" ModuleId="AutoBot.Cmd" />
-  <Module PersistentId="058789D3-BACE-456B-AFAC-56AE4E34C007" ModuleId="AutoBot.UnitTests" />
-</Modules>
