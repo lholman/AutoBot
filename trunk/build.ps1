@@ -30,10 +30,10 @@
 #* SCRIPT BODY
 #*==========================================================================================
 param([string]$task = "compile")
-Import-Module '.\lib\psake\psake.psm1'; 
+Import-Module '.\trunk\lib\psake\psake.psm1'; 
 #$psake
 $psake.use_exit_on_error = $true
-Invoke-psake -t $task -framework '4.0x64'; 
+Invoke-psake .\trunk\default.ps1 -t $task -framework '4.0x64'; 
 if ($Error -ne '') 
 { 
 	Write-Host "ERROR: $error" -fore RED; 

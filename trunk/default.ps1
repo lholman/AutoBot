@@ -6,11 +6,10 @@ Properties { # General props
 		$base_dir = Resolve-Path .
 		$lib_dir = "$base_dir\lib"
 		$build_dir = "$base_dir\build" 
-		$compile_dir = "$base_dir\src\DeployR.Web"
 	}
 	
 	Properties { # Projects and solutions
-		$sln_file = "$base_dir\src\Bot.sln"
+		$sln_file = "$base_dir\src\AutoBot.sln"
 	}
 
 Task default -depends Compile
