@@ -23,21 +23,7 @@ namespace AutoBot.Cmd
         {
             ConsoleColor oldColour = Console.ForegroundColor;
             Console.ForegroundColor = colour;
-
-            if (text.StartsWith("@{") && text.EndsWith("}"))
-            {
-                //assume we are passing a PowerShell hash table result
-                text = text.Substring(2, text.Length - 3);
-                string[] rows = text.Split(';');
-
-                foreach (var row in rows)
-                {
-                    Console.WriteLine(row.Trim(), args);
-                }
-            }
-            else
-                Console.WriteLine(text);
-           
+            Console.WriteLine(text, args);
             Console.ForegroundColor = oldColour;
         }
     }

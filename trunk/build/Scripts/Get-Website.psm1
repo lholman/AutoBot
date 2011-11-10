@@ -131,6 +131,6 @@ Process {
     }
 End {
     #Display Report
-    New-Object PSObject -property $report
+    return $report
     }
 }

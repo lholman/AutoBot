@@ -1,2 +1,0 @@
-C:\Development\AutoBot\AutoBot.Cmd\obj\x86\Debug\WinBot.Cmd.exe
-C:\Development\AutoBot\AutoBot.Cmd\obj\x86\Debug\WinBot.Cmd.pdb

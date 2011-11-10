@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Linq;
+using System.Management.Automation;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Xml;
 using jabber.client;
 using jabber.connection;
+using jabber.protocol;
 
 namespace AutoBot.Cmd
 {
-    public class HipChat
+    public static class HipChat
     {
         private static readonly ManualResetEvent done = new ManualResetEvent(false);
         private static string _hipChatServer;
@@ -19,15 +22,18 @@ namespace AutoBot.Cmd
         private static string _hipChatPassword; 
         private static string _hipChatResource;
         private static string _hipChatBotName;
+        private static string _hipChatRooms;
+        private static readonly DiscoManager discoManager = new DiscoManager();
 
-        internal static void SetupChatConnection()
+        public static void SetupChatConnection()
         {
             _hipChatServer = ConfigurationManager.AppSettings["HipChatServer"];
             _hipChatUsername = ConfigurationManager.AppSettings["HipChatUsername"];
             _hipChatPassword = ConfigurationManager.AppSettings["HipChatPassword"];
             _hipChatResource = ConfigurationManager.AppSettings["HipChatResource"];
             _hipChatBotName = ConfigurationManager.AppSettings["HipChatBotName"];
-
+            _hipChatRooms = ConfigurationManager.AppSettings["HipChatRooms"];
+            
             // set up the client connection details
             var client = new JabberClient();
             client.Server = _hipChatServer;
@@ -42,7 +48,6 @@ namespace AutoBot.Cmd
             client.AutoRoster = false;
             client.AutoReconnect = -1;
 
-            
             // set up some event handlers
             client.OnConnect += jabber_OnConnect;
             client.OnAuthenticate += jabber_OnAuthenticate;
@@ -61,7 +66,25 @@ namespace AutoBot.Cmd
         private static void jabber_OnConnect(object o, StanzaStream s)
         {
             Console.WriteLine("connecting");
+            var client = (JabberClient) o;
+            //DiscoNodeHandler discoNodeHandler = new DiscoNodeHandler().Target;
+
+            //discoManager.BeginFindServiceWithFeature(URI.MUC, discoNodeHandler, new object());
+
+            //if (_hipChatRooms == "@all")
+
         }
+
+        //void hlp_DiscoHandler_GetItems(DiscoManager sender, DiscoNode node, object state)
+        //{
+        //    int x = node.Children.Count;
+        //    foreach (jabber.connection.DiscoNode dn in node.Children)
+        //    {
+        //        ConsoleExtender.Info(dn.Name);
+        //        ConsoleExtender.Info(dn.Node);
+        //        ConsoleExtender.Info(dn.JID);
+        //    }
+        //}
 
         private static void jabber_OnAuthenticate(object o)
         {
@@ -126,44 +149,49 @@ namespace AutoBot.Cmd
             if (!body.InnerText.Trim().StartsWith(string.Format("@{0} ", _hipChatBotName)))
                 return;
 
-            //Strip off the @autobot from the chatText
+            // strip off the @autobot from the chatText
             string[] chatTextArgs = chatText.Split(' ');
             ArrayList arrayList = new ArrayList();
             for (int i = 1; i < chatTextArgs.Count(); i++)
                 arrayList.Add(chatTextArgs[i]);
 
             CommandLine commandLine = new CommandLine(arrayList);
+            
             CommandLine.CheckCommandLine(commandLine);
             
             Command command = commandLine.GetCommand;
-
-            string responseText = Powershell.RunPowershellModule(command.CommandText, command.ParameterText);
-            SendResponse(client, replyTo, responseText);
+            Collection<PSObject> psObjects = Powershell.RunPowershellModule(command.CommandText, command.ParameterText);
+            SendResponse(client, replyTo, psObjects);
         }
 
-        private static void SendResponse(JabberClient client, string replyTo, string text)
+        private static void SendResponse(JabberClient client, string replyTo, Collection<PSObject> psObjects)
         {
-            string message = string.Empty;
-
-            if (text.StartsWith("@{") && text.EndsWith("}"))
+            foreach (var psObject in psObjects)
             {
-                //assume we are passing a PowerShell hash table result
-                text = text.Substring(2, text.Length - 3);
-                string[] rows = text.Split(';');
-                message = rows.Aggregate(message, (current, row) => current + row.Trim());
-            }
-            else
-                message = text;
+                ConsoleExtender.Info(psObject.ImmediateBaseObject.GetType().FullName);
+                string message = string.Empty;
+                
+                // the PowerShell (.NET) return types we are supportings
+                if (psObject.BaseObject.GetType() == typeof(string))
+                {
+                    message = psObject.ToString();
+                }
+                else if (psObject.BaseObject.GetType() == typeof(Hashtable))
+                {
+                    Hashtable hashTable = (Hashtable)psObject.BaseObject;
 
-            // build the reply message
-            var template = "<message to=\"\" type=\"chat\" from=\"\"><body></body></message>";
-            var response = new XmlDocument();
-            response.LoadXml(template);
-            response.SelectSingleNode("message/@to").InnerText = replyTo;
-            response.SelectSingleNode("message/@from").InnerText = _hipChatUsername;
-            response.SelectSingleNode("message/body").InnerText = message;
-            // send the reply message
-            client.Write(response.OuterXml);
+                    foreach (DictionaryEntry dictionaryEntry in hashTable)
+                        message += string.Format("{0} = {1}\n", dictionaryEntry.Key, dictionaryEntry.Value);
+                }
+
+                var template = "<message to=\"\" type=\"chat\" from=\"\"><body></body></message>";
+                var response = new XmlDocument();
+                response.LoadXml(template);
+                response.SelectSingleNode("message/@to").InnerText = replyTo;
+                response.SelectSingleNode("message/@from").InnerText = _hipChatUsername;
+                response.SelectSingleNode("message/body").InnerText = message;
+                client.Write(response.OuterXml);
+            }
         }
 
 

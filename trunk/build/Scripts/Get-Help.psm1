@@ -1,19 +1,9 @@
 ﻿function Get-Help {
 <#
 .SYNOPSIS
-    Retrieves information about a website.
+    Displays all available AutoBot commands.
 .DESCRIPTION
-    Retrieves information about a website.
-.PARAMETER Url
-    URL of the website to test access to.
-.PARAMETER UseDefaultCredentials
-    Use the currently authenticated user's credentials
-.PARAMETER Proxy
-    Used to connect via a proxy
-.PARAMETER TimeOut
-    Timeout to connect to site, in milliseconds
-.PARAMETER Credential
-    Provide alternate credentials
+    Returns a list of names of all *.psm1 PowerShell Modules in the AutoBot\Scripts folder
 .NOTES
     Name: Get-Help
     Author: Lloyd Holman
