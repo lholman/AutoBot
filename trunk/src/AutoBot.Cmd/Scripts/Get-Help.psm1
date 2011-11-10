@@ -23,7 +23,7 @@ Begin {
 Process {
     Try {
         #Make connection to gather response from site
-        $dir = Get-ChildItem "C:\Development\AutoBot\trunk\build\Scripts" -recurse
+        $dir = Get-ChildItem -recurse
 		$fileList = $dir | Where {$_.extension -eq ".psm1"}
 		$fileList | Format-Table name | Out-String
         }

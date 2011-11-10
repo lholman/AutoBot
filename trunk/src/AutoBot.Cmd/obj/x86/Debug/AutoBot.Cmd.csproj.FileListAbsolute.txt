@@ -1,8 +1,10 @@
-C:\Development\AutoBot\AutoBot.Cmd\obj\x86\Debug\WinBot.Cmd.exe
-C:\Development\AutoBot\AutoBot.Cmd\obj\x86\Debug\WinBot.Cmd.pdb
-C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Development\AutoBot\trunk\build\Scripts\pokedex.txt
+C:\Development\AutoBot\trunk\build\Scripts\Get-Help.psm1
+C:\Development\AutoBot\trunk\build\Scripts\Get-PokedexEntry.psm1
+C:\Development\AutoBot\trunk\build\Scripts\Get-Website.psm1
+C:\Development\AutoBot\trunk\build\AutoBot.Cmd.exe.config
 C:\Development\AutoBot\trunk\build\AutoBot.Cmd.exe
 C:\Development\AutoBot\trunk\build\AutoBot.Cmd.pdb
+C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\AutoBot.Cmd.exe
 C:\Development\AutoBot\trunk\src\AutoBot.Cmd\obj\x86\Debug\AutoBot.Cmd.pdb
-C:\Development\AutoBot\trunk\build\AutoBot.Cmd.exe.config
