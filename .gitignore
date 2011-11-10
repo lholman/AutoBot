@@ -3,3 +3,4 @@ bin/
 _ReSharper.*/
 *.suo
 *.user
+App.config
