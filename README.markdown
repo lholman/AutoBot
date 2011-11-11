@@ -5,21 +5,21 @@ The core bot engine is written in C# (.NET 4), his functionality and extensibili
 WARNING: AutoBot is an infant and has some obvious (and other not so obvious) restrictions/issues/flaws, please take a look at [AutoBot's current issues](https://github.com/lholman/AutoBot/issues?labels=AutoBot.Engine&sort=created&direction=desc&state=open&page=1) before continuing.
 
 ## Building Your AutoBot 
-+ Setup Git
+1. Setup Git
 
 	http://help.github.com/win-set-up-git/
 
-+ Get AutoBot source by cloning the github repo
+1. Get AutoBot source by cloning the github repo
 
 	$ git clone git@github.com:lholman/AutoBot.git
 
-+ Build AutoBot
+1. Build AutoBot
 
 	C:\AutoBot>rename "src\AutoBot.Cmd\App.config.example"  "src\AutoBot.Cmd\App.config"
 	C:\AutoBot>build.bat
 
 ## Running Your AutoBot
-+ As a CommandLine App
+1. As a CommandLine App
     C:\AutoBot>AutoBot.Cmd.exe
 
 ## Scripts
