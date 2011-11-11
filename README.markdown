@@ -19,8 +19,9 @@ WARNING: AutoBot is an infant and has some obvious (and other not so obvious) re
 	C:\AutoBot>build.bat
 
 ## Running Your AutoBot
-1. As a CommandLine App
-    C:\AutoBot>AutoBot.Cmd.exe
++ As a CommandLine App
+
+		C:\AutoBot>AutoBot.Cmd.exe
 
 ## Scripts
 AutoBot's scripts are written in [PowerShell](http://en.wikipedia.org/wiki/Windows_PowerShell).  
