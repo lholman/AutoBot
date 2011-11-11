@@ -1,0 +1,8 @@
+.config
+.sln
+.suo
+.csproj
+.vbproj
+.cs\
+\obj\
+\Properties\
