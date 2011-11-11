@@ -29,13 +29,13 @@ AutoBot comes with a [couple of simple scripts](https://github.com/lholman/AutoB
 ## Contributing To AutoBot Scripts
 1. Head over to [AutoBot-Scripts](https://github.com/lholman/AutoBot-Scripts)
 
-## Contributing To AutoBot Core
+## Contributing To AutoBot's Core Engine
 1. Fork it.
 1. Create a branch (git checkout -b my_autobot)
 1. Commit your changes (git commit -am "Added cool feature")
 1. Push to the branch (git push origin my_autobot)
 1. Create an [Issue](http://github.com/lholman/AutoBot/issues) with a link to your branch
-1. Wait for feedback
+1. Wait for feedback and do more [AutoBot's current issues](https://github.com/lholman/AutoBot/issues?labels=AutoBot.Engine&sort=created&direction=desc&state=open&page=1)
 
 ## Disclaimer
 NO warranty, expressed or written
