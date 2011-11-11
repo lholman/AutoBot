@@ -31,9 +31,20 @@ namespace AutoBot.Cmd
                 if (scriptName != "Get-Help")
                     invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
 
-                // run the Function with the same name as the module 
-                psObjects = invoker.Invoke(string.Format("{0} {1}", scriptName, command));
-                return psObjects;
+                try
+                {
+                    // run the Function with the same name as the module 
+                    psObjects = invoker.Invoke(string.Format("{0} {1}", scriptName, command));
+                    return psObjects;
+
+                }
+                catch (Exception)
+                {
+                    return new Collection<PSObject>
+                                            {
+                                                new PSObject(string.Format("Urghhh!, that didn't taste nice!  There's a problem with me running the {0} script.  Ask your administrator for the event/error log entry.", scriptName))
+                                            };
+                }
             }
 
         }
