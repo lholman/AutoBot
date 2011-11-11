@@ -23,4 +23,7 @@ Task default -depends Compile
 		exec { & msbuild $sln_file /t:Build  /p:Configuration=Release /v:q }
 	}
 
-	
+	Task Package -depends Compile {
+		#Copy Scripts that have been dumped in the $base_dir\src\AutoBot.Cmd\Scripts file by any other means
+		exec { & xcopy $base_dir\src\AutoBot.Cmd\Scripts $base_dir\build\Scripts /S/Y/I }		
+	}
