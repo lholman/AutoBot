@@ -8,7 +8,7 @@ namespace AutoBot.Cmd
 {
     public class Powershell
     {
-        private static readonly string ScriptsPath = Path.Combine(Environment.CurrentDirectory, "Scripts");
+        private static readonly string ScriptsPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Scripts");
 
         internal static Collection<PSObject> RunPowershellModule(string scriptName, string command)
         {

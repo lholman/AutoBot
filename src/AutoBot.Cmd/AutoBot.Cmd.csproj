@@ -64,9 +64,6 @@
     <None Include="Scripts\Get-PokedexEntry.psm1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Get-Website.psm1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\pokedex.txt">
