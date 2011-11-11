@@ -7,16 +7,17 @@ WARNING: AutoBot is an infant and has some obvious (and other not so obvious) re
 ## Building Your AutoBot 
 1. Setup Git
 
-	http://help.github.com/win-set-up-git/
+		http://help.github.com/win-set-up-git/
 
 1. Get AutoBot source by cloning the github repo
 
-	$ git clone git@github.com:lholman/AutoBot.git
+		$ git clone git@github.com:lholman/AutoBot.git
 
 1. Build AutoBot
 
-	C:\AutoBot>rename "src\AutoBot.Cmd\App.config.example"  "src\AutoBot.Cmd\App.config"
-	C:\AutoBot>build.bat
+		C:\AutoBot>rename "src\AutoBot.Cmd\App.config.example"  "src\AutoBot.Cmd\App.config"
+		
+		C:\AutoBot>build.bat
 
 ## Running Your AutoBot
 + As a CommandLine App
