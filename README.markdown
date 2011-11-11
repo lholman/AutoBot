@@ -1,6 +1,8 @@
 # AutoBot
-AutoBot is inspired by GitHub's splendid [HUBOT](http://hubot.github.com/), AutoBot however, is one for the Windows crew. 
-The core bot engine is written in C# (.NET 4), his functionality and extensibility is provided by the addition of PowerShell modules which are dynamically loaded and executed at runtime.
+AutoBot is inspired by GitHub's splendid [HUBOT](http://hubot.github.com/) and a childhood love of [Transformers](http://en.wikipedia.org/wiki/Autobot), AutoBot however is a chat bot for the Windows crew. 
+
++ The core bot engine is written in C# (.NET 4), his functionality and extensibility is provided by the addition of PowerShell modules which are dynamically loaded and executed at runtime.
++ AutoBot currently chats only with the [XMPP](http://xmpp.org/about-xmpp/) powered awesomeness that is [HipChat](http://www.hipchat.com)
 
 WARNING: AutoBot is an infant and has some obvious (and other not so obvious) restrictions/issues/flaws, please take a look at [AutoBot's current issues](https://github.com/lholman/AutoBot/issues?labels=AutoBot.Engine&sort=created&direction=desc&state=open&page=1) before continuing.
 
