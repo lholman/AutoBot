@@ -1,5 +1,0 @@
-C:\Development\WinBot\WinBot.Cmd\bin\Debug\WinBot.Cmd.exe
-C:\Development\WinBot\WinBot.Cmd\bin\Debug\WinBot.Cmd.pdb
-C:\Development\WinBot\WinBot.Cmd\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Development\WinBot\WinBot.Cmd\obj\x86\Debug\WinBot.Cmd.exe
-C:\Development\WinBot\WinBot.Cmd\obj\x86\Debug\WinBot.Cmd.pdb
