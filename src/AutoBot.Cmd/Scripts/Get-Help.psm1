@@ -1,9 +1,10 @@
 ﻿function Get-Help {
 <#
 .SYNOPSIS
-    Displays all available AutoBot commands.
+    Details all available AutoBot commands.
 .DESCRIPTION
-    Returns a list of names of all *.psm1 PowerShell Modules in the AutoBot\Scripts folder
+    Returns a list of names of all *.psm1 PowerShell Modules in the AutoBot\Scripts folder and optionally gives
+	detailed help on a given script
 .NOTES
     Name: Get-Help
     Author: Lloyd Holman
@@ -12,26 +13,41 @@
     Get-Help
 Description
 ------------
-Returns a list of names of all *.psm1 PowerShell Modules in the AutoBot\Scripts folder
+Returns a list of names of all *.psm1 PowerShell Modules in the AutoBot\Scripts folder and optionally gives
+detailed help on a given script
 
 #>
-
+[cmdletbinding()]
+    Param(
+        [Parameter(
+            Mandatory = $False )]
+            [string]$modulename
+        )
 Begin {
-    #Set TimeStamp prior to attempting connection
-    $then = get-date
+		
     }
 Process {
-    Try {
-        #Make connection to gather response from site
-        $dir = Get-ChildItem -recurse
-		$fileList = $dir | Where {$_.extension -eq ".psm1"}
-		$fileList | Format-Table name | Out-String
-        }
-    Catch {
-        }
+			
+			Try 
+			{
+				If ($modulename -ne "")
+				{
+					#Write-Output "$modulename provided"
+					Microsoft.PowerShell.Core\Import-Module ".\$modulename.psm1"
+					$ghelp = Microsoft.PowerShell.Core\Get-Help $moduleName
+				}
+				else 
+				{						
+					$dir = Get-ChildItem -recurse
+					$fileList = $dir | Where {$_.extension -eq ".psm1"}
+					$ghelp = $fileList | Format-Table name
+				}
+			}
+			catch [Exception] {
+				Write-Host $_.Exception.ToString()
+			}
     }
 End {
-    #Display Report
-    #New-Object PSObject -property $fileList
+		return $ghelp | Out-String
     }
 }

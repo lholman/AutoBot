@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Management.Automation;
@@ -25,21 +25,32 @@ namespace AutoBot.Cmd
                 string scriptPath = GetPath(scriptName);
                 Collection<PSObject> psObjects;
 
-                if (scriptName == "Get-Help" && command == string.Empty)
-                    invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
-
-                if (scriptName != "Get-Help")
-                    invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
+                invoker.Invoke(string.Format("Import-Module {0}", scriptPath));
 
                 try
                 {
                     // run the Function with the same name as the module 
-                    psObjects = invoker.Invoke(string.Format("{0} {1}", scriptName, command));
+                    IList errors;
+                    psObjects = invoker.Invoke(string.Format("{0} {1}", scriptName, command), null, out errors);
+                    invoker.Invoke(string.Format("Remove-Module {0}", scriptName));
+                    if (errors.Count > 0)
+                    {
+                        string errorString = string.Empty;
+                        foreach (var error in errors)
+                            errorString += error.ToString();
+
+                        ConsoleExtender.Error(errorString);
+                        return new Collection<PSObject>
+                                            {
+                                                new PSObject(string.Format("OOohhh, I got an error running {0}.  It looks like this: {1}.", scriptName, errorString))
+                                            };
+                    }
                     return psObjects;
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ConsoleExtender.Error(ex.ToString());
                     return new Collection<PSObject>
                                             {
                                                 new PSObject(string.Format("Urghhh!, that didn't taste nice!  There's a problem with me running the {0} script.  Ask your administrator for the event/error log entry.", scriptName))
