@@ -17,7 +17,7 @@ namespace AutoBot.Cmd
             {
                 return new Collection<PSObject>
                                             {
-                                                new PSObject("Unknown command!, try Get-Help instead")
+                                                new PSObject("Unknown command!, try \"@autobot Get-Help\" instead")
                                             };
             }
             using (RunspaceInvoke invoker = new RunspaceInvoke())
@@ -51,9 +51,13 @@ namespace AutoBot.Cmd
                 catch (Exception ex)
                 {
                     ConsoleExtender.Error(ex.ToString());
+                    string errorText = string.Format("Urghhh!, that didn't taste nice!  There's a problem with me running the {0} script. \r\n", scriptName);
+                    errorText += String.Format("Check you are calling the script correctly by using \"@autobot get-help {0}\" \r\n", scriptName);
+                    errorText += "If all else fails ask your administrator for the event/error log entry.";
+                    
                     return new Collection<PSObject>
                                             {
-                                                new PSObject(string.Format("Urghhh!, that didn't taste nice!  There's a problem with me running the {0} script.  Ask your administrator for the event/error log entry.", scriptName))
+                                                new PSObject(errorText)
                                             };
                 }
             }

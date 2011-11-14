@@ -38,17 +38,17 @@ Process {
 				{
 					#Write-Output "$modulename provided"
 					If ($modulename -ne "Get-Help")
-					{
+					{B
 						Microsoft.PowerShell.Core\Import-Module ".\Scripts\$modulename.psm1"
 						$ghelp = Microsoft.PowerShell.Core\Get-Help $moduleName
 					}
 					
 				}
-				else 
+				else	
 				{
-					$ghelp = "Hi, I'm AutoBot, I have the following scripts installed and ready to run. `r`n"						
-					$ghelp += Get-ChildItem -recurse | Where {$_.extension -eq ".psm1"} | ForEach-Object {(Split-Path $_.name -leaf).ToString().Replace(".psm1", "")}
-					$ghelp += "`r`nFor more information about an installed script try @AutoBot get-help <scriptname> e.g. @AutoBot get-help set-profile. `r`nFind more scripts at https://github.com/lholman/AutoBot-Scripts/tree/master/src/Scripts" 
+					$ghelp = "Word!  I have the following scripts installed and ready to run.`r`n `r`n"	
+					$ghelp += Get-ChildItem -recurse | Where {$_.extension -eq ".psm1"} | ForEach-Object {(Split-Path $_.name -leaf).ToString().Trim().Replace(".psm1", "`r`n")}
+					$ghelp += "`r`nFor information about running an installed script use get-help <scriptname> `r`ne.g. `"@AutoBot get-help set-profile.`" `r`nFind more scripts at https://github.com/lholman/AutoBot-Scripts/tree/master/src/Scripts" 
 				}
 			}
 			catch [Exception] {
