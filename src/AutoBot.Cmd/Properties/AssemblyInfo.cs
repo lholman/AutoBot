@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -20,6 +19,10 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("bc383ace-32a5-4ed0-adc9-575e7a203090")]
+
+// Instructs log4net to load its configuration from the application’s configuration file.
+// Setting the Watch parameter to true causes log4net to actively monitor the configuration file for changes.
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

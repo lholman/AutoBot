@@ -10,7 +10,7 @@ using System.Threading;
 using System.Xml;
 using jabber.client;
 using jabber.connection;
-using jabber.protocol;
+using log4net;
 
 namespace AutoBot.Cmd
 {
@@ -24,6 +24,7 @@ namespace AutoBot.Cmd
         private static string _hipChatBotName;
         private static string _hipChatRooms;
         private static readonly DiscoManager discoManager = new DiscoManager();
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
 
         public static void SetupChatConnection()
         {
@@ -65,7 +66,7 @@ namespace AutoBot.Cmd
 
         private static void jabber_OnConnect(object o, StanzaStream s)
         {
-            Console.WriteLine("connecting");
+            _logger.Info("Connecting");
             var client = (JabberClient) o;
             //DiscoNodeHandler discoNodeHandler = new DiscoNodeHandler().Target;
 
@@ -88,7 +89,7 @@ namespace AutoBot.Cmd
 
         private static void jabber_OnAuthenticate(object o)
         {
-            Console.WriteLine("authenticated");
+            _logger.Info("Authenticated");
             var client = (JabberClient)o;
         }
 
@@ -96,34 +97,31 @@ namespace AutoBot.Cmd
         {
             // the current jabber server has an invalid certificate,
             // but override validation and accept it anyway.
-            Console.WriteLine("validating certificate");
+            _logger.Info("Validating certificate");
             return true;
         }
 
-        private static void jabber_OnError(object o, Exception e)
+        private static void jabber_OnError(object o, Exception ex)
         {
-            Console.WriteLine("error occurred");
-            Console.WriteLine(e.ToString());
-            throw e;
+            _logger.Error("ERROR!:", ex);
+            throw ex;
         }
 
         private static void jabber_OnReadText(object sender, string text)
         {
             // ignore keep-alive spaces
             if (text == " ") return;
-            Console.WriteLine("RECV: " + text);
+                _logger.Debug(string.Format("RECV: {0}", text));
             // check if this is an incoming message for autobot
             if (text.StartsWith("<message "))
-            {
                 ProcessRequest((JabberClient)sender, text);
-            }
         }
 
         private static void jabber_OnWriteText(object sender, string text)
         {
             // ignore keep-alive spaces
             if (text == " ") return;
-            Console.WriteLine("SEND: " + text);
+                _logger.Debug(string.Format("SEND: {0}", text));
         }
 
         private static void ProcessRequest(JabberClient client, string message)
@@ -168,14 +166,13 @@ namespace AutoBot.Cmd
         {
             foreach (var psObject in psObjects)
             {
-                ConsoleExtender.Info(psObject.ImmediateBaseObject.GetType().FullName);
+                _logger.Info(psObject.ImmediateBaseObject.GetType().FullName);
                 string message = string.Empty;
                 
-                // the PowerShell (.NET) return types we are supportings
+                // the PowerShell (.NET) return types we are supporting
                 if (psObject.BaseObject.GetType() == typeof(string))
-                {
                     message = psObject.ToString();
-                }
+                
                 else if (psObject.BaseObject.GetType() == typeof(Hashtable))
                 {
                     Hashtable hashTable = (Hashtable)psObject.BaseObject;
@@ -184,7 +181,7 @@ namespace AutoBot.Cmd
                         message += string.Format("{0} = {1}\n", dictionaryEntry.Key, dictionaryEntry.Value);
                 }
 
-                var template = "<message to=\"\" type=\"chat\" from=\"\"><body></body></message>";
+                const string template = "<message to=\"\" type=\"chat\" from=\"\"><body></body></message>";
                 var response = new XmlDocument();
                 response.LoadXml(template);
                 response.SelectSingleNode("message/@to").InnerText = replyTo;
