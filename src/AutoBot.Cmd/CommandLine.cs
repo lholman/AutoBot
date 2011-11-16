@@ -8,7 +8,15 @@ namespace AutoBot.Cmd
 
         public CommandLine(ArrayList args)
         {
-            GetCommand = args.Count == 1 ? new Command(args[0].ToString(), string.Empty) : new Command(args[0].ToString(), args[1].ToString());
+            string command = args[0].ToString();
+            string parameters = string.Empty;
+
+            for (int i = 1; i < args.Count; i++)
+            {
+                parameters += args[i].ToString() + " ";
+            }
+
+            GetCommand = new Command(command, parameters);
         }
 
         public static bool CheckCommandLine(CommandLine commandLine)

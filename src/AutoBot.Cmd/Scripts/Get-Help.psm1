@@ -48,7 +48,7 @@ Process {
 				{
 					$result = "Word!  I have the following scripts installed and ready to run.`r`n `r`n"	
 					$result += Get-ChildItem -Recurse -exclude get-help.psm1 -Filter *.psm1 | % {$result += "$([IO.Path]::GetFileNameWithoutExtension($_))`r`n"}
-					$result += "`r`n`For information about running an installed script use get-help <scriptname> `r`ne.g. `"@AutoBot get-help set-profile.`" `r`nFind more scripts at https://github.com/lholman/AutoBot-Scripts/tree/master/src/Scripts" 
+					$result += "`r`n`For information about running an installed script use get-help <scriptname> `r`ne.g. `"@AutoBot get-help set-profile`" `r`nFind more scripts at https://github.com/lholman/AutoBot-Scripts/tree/master/src/Scripts" 
 				}
 			}
 			Catch [Exception] {

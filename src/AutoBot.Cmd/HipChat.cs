@@ -10,6 +10,8 @@ using System.Threading;
 using System.Xml;
 using jabber.client;
 using jabber.connection;
+using jabber.protocol;
+using jabber.protocol.stream;
 using log4net;
 
 namespace AutoBot.Cmd
@@ -24,6 +26,7 @@ namespace AutoBot.Cmd
         private static string _hipChatBotName;
         private static string _hipChatRooms;
         private static readonly DiscoManager discoManager = new DiscoManager();
+        private static XmppStream stream;
         private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
 
         public static void SetupChatConnection()
@@ -56,6 +59,7 @@ namespace AutoBot.Cmd
             client.OnError += jabber_OnError;
             client.OnReadText += jabber_OnReadText;
             client.OnWriteText += jabber_OnWriteText;
+            client.OnStreamInit += jabber_OnStreamInit;
 
             // connect. this is synchronous so we'll use a manual reset event
             // to pause this thread forever. client events will continue to
@@ -64,33 +68,46 @@ namespace AutoBot.Cmd
             done.WaitOne();
         }
 
+        private static void jabber_OnStreamInit(object o, ElementStream elementStream)
+        {
+            var client = (JabberClient)o;
+            discoManager.Stream = client;
+             
+        }
+
         private static void jabber_OnConnect(object o, StanzaStream s)
         {
             _logger.Info("Connecting");
             var client = (JabberClient) o;
-            //DiscoNodeHandler discoNodeHandler = new DiscoNodeHandler().Target;
-
-            //discoManager.BeginFindServiceWithFeature(URI.MUC, discoNodeHandler, new object());
-
-            //if (_hipChatRooms == "@all")
-
         }
 
-        //void hlp_DiscoHandler_GetItems(DiscoManager sender, DiscoNode node, object state)
-        //{
-        //    int x = node.Children.Count;
-        //    foreach (jabber.connection.DiscoNode dn in node.Children)
-        //    {
-        //        ConsoleExtender.Info(dn.Name);
-        //        ConsoleExtender.Info(dn.Node);
-        //        ConsoleExtender.Info(dn.JID);
-        //    }
-        //}
+        private static void hlp_DiscoHandler_GetItems(DiscoManager sender, DiscoNode node, object state)
+        {
+            if (node.Children != null)
+            {
+                int x = node.Children.Count;
+                foreach (jabber.connection.DiscoNode dn in node.Children)
+                {
+
+                    _logger.Info(dn.Name);
+                    _logger.Info(dn.Node);
+                    _logger.Info(dn.JID);
+                }
+            }
+        }
 
         private static void jabber_OnAuthenticate(object o)
         {
             _logger.Info("Authenticated");
             var client = (JabberClient)o;
+            string streamId = client.StreamID;
+            DiscoNode discoNode = discoManager.GetNode(client.JID);
+
+            //discoManager.Stream = stream;
+            
+            discoManager.BeginFindServiceWithFeature(URI.MUC, hlp_DiscoHandler_GetItems, new object());
+
+            //if (_hipChatRooms == "@all")
         }
 
         private static bool jabber_OnInvalidCertificate(object o, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
