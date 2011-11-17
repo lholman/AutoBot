@@ -24,7 +24,7 @@ detailed help on a given script
         )
 Begin {
 
-		Add-Type -path ""
+		Add-Type -path "..\HipChat.Net.dll"
 		
     }
 Process {

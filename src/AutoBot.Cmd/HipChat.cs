@@ -60,12 +60,19 @@ namespace AutoBot.Cmd
             client.OnReadText += jabber_OnReadText;
             client.OnWriteText += jabber_OnWriteText;
             client.OnStreamInit += jabber_OnStreamInit;
+            client.OnDisconnect += jabber_OnDisconnect;
 
             // connect. this is synchronous so we'll use a manual reset event
             // to pause this thread forever. client events will continue to
             // fire but we won't have to worry about setting up an idle "while" loop.
             client.Connect();
             done.WaitOne();
+        }
+
+        private static void jabber_OnDisconnect(object sender)
+        {
+            throw new NotImplementedException();
+
         }
 
         private static void jabber_OnStreamInit(object o, ElementStream elementStream)

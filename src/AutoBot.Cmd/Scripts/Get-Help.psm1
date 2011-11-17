@@ -23,9 +23,22 @@ Returns PowerShell native get-help detail for the Set-Profile AutoBot script mod
 #>
 [cmdletbinding()]
     Param(
-        [Parameter(
-            Mandatory = $False )]
-            [string]$modulename
+			[Parameter(
+				Position = 0,
+				Mandatory = $False )]
+				[string]$modulename,
+			[Parameter(
+				Position = 1,
+				Mandatory = $False )]
+				[switch]$examples,
+			[Parameter(
+				Position = 2,
+				Mandatory = $False )]
+				[switch]$detailed,
+			[Parameter(
+				Position = 3,
+				Mandatory = $False )]
+				[switch]$full
         )
 Begin {
 		
@@ -40,7 +53,22 @@ Process {
 					If ($modulename -ne "Get-Help")
 					{
 						Microsoft.PowerShell.Core\Import-Module ".\Scripts\$modulename.psm1"
-						$result = Microsoft.PowerShell.Core\Get-Help $moduleName
+						if ($PSBoundParameters.ContainsKey("examples"))
+						{	
+							$result = Microsoft.PowerShell.Core\Get-Help $moduleName -examples
+						}
+						elseif ($PSBoundParameters.ContainsKey("detailed"))
+						{	
+							$result = Microsoft.PowerShell.Core\Get-Help $moduleName -detailed
+						}				
+						elseif ($PSBoundParameters.ContainsKey("full"))
+						{	
+							$result = Microsoft.PowerShell.Core\Get-Help $moduleName -full
+						}
+						else
+						{
+							$result = Microsoft.PowerShell.Core\Get-Help $moduleName
+						}
 					}
 					
 				}
