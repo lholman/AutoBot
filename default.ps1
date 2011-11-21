@@ -1,16 +1,14 @@
-
-Properties { # General props
+Properties { # Directories
+	$base_dir = Resolve-Path .
+	$lib_dir = "$base_dir\lib"
+	$build_dir = "$base_dir\build" 
 }
-	
-	Properties { # Directories
-		$base_dir = Resolve-Path .
-		$lib_dir = "$base_dir\lib"
-		$build_dir = "$base_dir\build" 
-	}
-	
-	Properties { # Projects and solutions
-		$sln_file = "$base_dir\src\AutoBot.sln"
-	}
+
+Properties { # Projects and solutions
+	$sln_file = "$base_dir\src\AutoBot.sln"
+}
+
+$framework = '4.0'
 
 Task default -depends Compile
 

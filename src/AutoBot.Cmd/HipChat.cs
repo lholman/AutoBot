@@ -13,6 +13,7 @@ using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 using log4net;
+using System.Linq;
 
 namespace AutoBot.Cmd
 {
@@ -30,7 +31,8 @@ namespace AutoBot.Cmd
         private static readonly string HipChatUsername;
         private static readonly string HipChatPassword; 
         private static readonly string HipChatResource;
-        private static readonly string HipChatBotName;
+        private static readonly string HipChatBotMentionName;
+        private static readonly string HipChatBotNickName;
         private static readonly string HipChatRooms;
         
         static HipChat()
@@ -39,7 +41,8 @@ namespace AutoBot.Cmd
             HipChatUsername = ConfigurationManager.AppSettings["HipChatUsername"];
             HipChatPassword = ConfigurationManager.AppSettings["HipChatPassword"];
             HipChatResource = ConfigurationManager.AppSettings["HipChatResource"];
-            HipChatBotName = ConfigurationManager.AppSettings["HipChatBotName"];
+            HipChatBotMentionName = ConfigurationManager.AppSettings["HipChatBotMentionName"];
+            HipChatBotNickName = ConfigurationManager.AppSettings["HipChatBotNickName"];
             HipChatRooms = ConfigurationManager.AppSettings["HipChatRooms"];
 
             PresenceManager = new PresenceManager
@@ -136,7 +139,7 @@ namespace AutoBot.Cmd
         {
             if (node == null)
                 return;
-            
+             
             if (node.Name == "Rooms")
                 DiscoManager.BeginGetItems(node, hlp_DiscoHandler_SubscribeToRooms, new object());
         }
@@ -152,7 +155,7 @@ namespace AutoBot.Cmd
                     Logger.Info(string.Format("Subscribing to: {0}:{1}", dn.JID, dn.Name));
                     // we have to build a new JID here, with the nickname included http://xmpp.org/extensions/xep-0045.html#enter-muc
                     JID subscriptionJid = new JID(dn.JID.User, dn.JID.Server, "AutoBot .");
-                    JabberClient.Subscribe(subscriptionJid, "AutoBot .", null);
+                    JabberClient.Subscribe(subscriptionJid, HipChatBotNickName, null);
                 }
             }
         }
@@ -208,18 +211,43 @@ namespace AutoBot.Cmd
 
             if (string.IsNullOrEmpty(chatText) || chatText == " ")
                 return;
-
-            //Ensure the message is intended for AutoBot
-            if (message.Type == MessageType.groupchat && !chatText.StartsWith(string.Format("@{0} ", HipChatBotName)))
+            
+            JID responseJid = new JID(message.From.User, message.From.Server, message.From.Resource);
+            
+            // intercept a handful of messages not directly for AutoBot
+            if (message.Type == MessageType.groupchat && !chatText.Trim().StartsWith(HipChatBotMentionName))
+            {
+                chatText = RemoveMentionFromMessage(chatText);
+                SendRandomResponse(responseJid, chatText, message.Type);
                 return;
+            }
 
-            PowershellRunner.BuildPowerShellCommand(chatText, HipChatBotName);
-            PowerShellCommand powerShellCommand = PowershellRunner.GetPowerShellCommand;
-
+            // ensure the message is intended for AutoBot
+            chatText = RemoveMentionFromMessage(chatText);
+            PowerShellCommand powerShellCommand = BuildPowerShellCommand(chatText);
             Collection<PSObject> psObjects = PowershellRunner.RunPowerShellModule(powerShellCommand.CommandText,
                                                                             powerShellCommand.ParameterText);
-            JID responseJid = new JID(message.From.User, message.From.Server, message.From.Resource);
             SendResponse(responseJid, psObjects, message.Type);
+        }
+
+        private static string RemoveMentionFromMessage(string chatText)
+        {
+            //TODO: Remove all @'s
+            return chatText.Replace(HipChatBotMentionName, string.Empty).Trim();
+        }
+
+        private static PowerShellCommand BuildPowerShellCommand(string chatText)
+        {
+            string[] chatTextArgs = chatText.Split(' ');
+            string command = string.Empty;
+            string parameters = string.Empty;
+
+            command = chatTextArgs[0];
+
+            for (int i = 0 + 1; i < chatTextArgs.Count(); i++)
+                parameters += chatTextArgs[i] + " ";
+
+            return new PowerShellCommand(command, parameters);
         }
 
         private static void SendResponse(JID replyTo, Collection<PSObject> psObjects, MessageType messageType)
@@ -243,6 +271,30 @@ namespace AutoBot.Cmd
                 
                 JabberClient.Message(messageType, replyTo, message);
             }
+        }
+
+        private static void SendRandomResponse(JID replyTo, string chatText, MessageType messageType)
+        {
+            string[] chatTextWords = chatText.Split(' ');
+            string message = string.Empty;
+            switch (chatTextWords[0])
+            {
+                case "coolio":
+                case "superb":
+                    message = "Get-RandomImage " + chatText;
+                    break;
+                default:
+                    break;
+            }
+
+            if (message != string.Empty)
+            {
+                PowerShellCommand powerShellCommand = BuildPowerShellCommand(message);
+                Collection<PSObject> psObjects = PowershellRunner.RunPowerShellModule(powerShellCommand.CommandText,
+                                                                                powerShellCommand.ParameterText);
+                SendResponse(replyTo, psObjects, messageType);
+            }
+            return;
         }
 
 

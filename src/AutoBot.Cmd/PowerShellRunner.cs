@@ -4,14 +4,12 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Management.Automation;
 using log4net;
-using System.Linq;
+
 
 namespace AutoBot.Cmd
 {
     public class PowerShellRunner
     {
-        internal PowerShellCommand GetPowerShellCommand { get; private set; }
-        
         private readonly string _scriptsPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Scripts");
         private readonly ILog _logger = LogManager.GetLogger(typeof(Program));
 
@@ -81,31 +79,11 @@ namespace AutoBot.Cmd
             
             return path + filenameWithoutExtension + ".psm1";
         }
-    
-
-        internal void BuildPowerShellCommand(string chatText, string botName)
-        {
-            string[] chatTextArgs = chatText.Split(' ');
-            string command = string.Empty;
-            string parameters = string.Empty;
-            
-            int startPosition = 0;
-            if (chatText.StartsWith(string.Format("@{0} ", botName)))
-                startPosition = 1;
-
-            command = chatTextArgs[startPosition];
-
-            for (int i = startPosition+1; i < chatTextArgs.Count(); i++)
-                parameters += chatTextArgs[i] + " ";
-
-            GetPowerShellCommand = new PowerShellCommand(command, parameters);
-        }
 
     }   
 
     public class PowerShellCommand
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public string CommandText { get; set; }
         public string ParameterText { get; set; }
 
