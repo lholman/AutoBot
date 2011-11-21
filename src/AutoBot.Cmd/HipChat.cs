@@ -8,65 +8,112 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Xml;
+using jabber;
 using jabber.client;
 using jabber.connection;
 using jabber.protocol;
-using jabber.protocol.stream;
+using jabber.protocol.client;
+using jabber.protocol.iq;
 using log4net;
 
 namespace AutoBot.Cmd
 {
     public static class HipChat
     {
-        private static readonly ManualResetEvent done = new ManualResetEvent(false);
-        private static string _hipChatServer;
-        private static string _hipChatUsername;
-        private static string _hipChatPassword; 
-        private static string _hipChatResource;
-        private static string _hipChatBotName;
-        private static string _hipChatRooms;
-        private static readonly DiscoManager discoManager = new DiscoManager();
-        private static XmppStream stream;
-        private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
+        private static readonly JabberClient JabberClient;
+        private static readonly PresenceManager PresenceManager;
+        private static PowerShellRunner _powershellRunner = new PowerShellRunner();
 
-        public static void SetupChatConnection()
+        private static readonly ManualResetEvent Done = new ManualResetEvent(false);
+        private static readonly DiscoManager DiscoManager = new DiscoManager();
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
+        
+        private static readonly string HipChatServer;
+        private static readonly string _hipChatUsername;
+        private static readonly string _hipChatPassword; 
+        private static readonly string _hipChatResource;
+        private static readonly string _hipChatBotName;
+        private static readonly string _hipChatRooms;
+        
+        static HipChat()
         {
-            _hipChatServer = ConfigurationManager.AppSettings["HipChatServer"];
+            HipChatServer = ConfigurationManager.AppSettings["HipChatServer"];
             _hipChatUsername = ConfigurationManager.AppSettings["HipChatUsername"];
             _hipChatPassword = ConfigurationManager.AppSettings["HipChatPassword"];
             _hipChatResource = ConfigurationManager.AppSettings["HipChatResource"];
             _hipChatBotName = ConfigurationManager.AppSettings["HipChatBotName"];
             _hipChatRooms = ConfigurationManager.AppSettings["HipChatRooms"];
+
+            PresenceManager = new PresenceManager
+                                   {
+                                       Stream = JabberClient
+                                   };
             
+
             // set up the client connection details
-            var client = new JabberClient();
-            client.Server = _hipChatServer;
-            client.User = _hipChatUsername;
-            client.Password = _hipChatPassword;
-            client.Resource = _hipChatResource;
-            client.AutoStartTLS = true;
-            client.PlaintextAuth = true;
+            JabberClient = new JabberClient
+                                {
+                                    Server = HipChatServer,
+                                    User = _hipChatUsername,
+                                    Password = _hipChatPassword,
+                                    Resource = _hipChatResource,
+                                    AutoStartTLS = true,
+                                    PlaintextAuth = true,
+                                    AutoPresence = true,
+                                    AutoRoster = false,
+                                    AutoReconnect = -1,
+                                    AutoLogin = true
+                                };
 
             // set some other properties on the client connection
-            client.AutoPresence = true;
-            client.AutoRoster = false;
-            client.AutoReconnect = -1;
 
             // set up some event handlers
-            client.OnConnect += jabber_OnConnect;
-            client.OnAuthenticate += jabber_OnAuthenticate;
-            client.OnInvalidCertificate += jabber_OnInvalidCertificate;
-            client.OnError += jabber_OnError;
-            client.OnReadText += jabber_OnReadText;
-            client.OnWriteText += jabber_OnWriteText;
-            client.OnStreamInit += jabber_OnStreamInit;
-            client.OnDisconnect += jabber_OnDisconnect;
+            //_rosterManager.OnRosterItem += _rosterManager_OnRosterItem;
+            PresenceManager.OnPrimarySessionChange += _presenceManager_OnPrimarySessionChange;
 
+            JabberClient.OnConnect += jabber_OnConnect;
+            JabberClient.OnAuthenticate += jabber_OnAuthenticate;
+            JabberClient.OnInvalidCertificate += jabber_OnInvalidCertificate;
+            JabberClient.OnError += jabber_OnError;
+            JabberClient.OnReadText += jabber_OnReadText;
+            JabberClient.OnWriteText += jabber_OnWriteText;
+            JabberClient.OnStreamInit += jabber_OnStreamInit;
+            JabberClient.OnDisconnect += jabber_OnDisconnect;
+            JabberClient.OnRegistered += jabber_OnRegistered;
+            JabberClient.OnRegisterInfo += jabber_OnRegisterInfo;
+            JabberClient.OnMessage += jabber_OnMessage;
+
+        }
+
+        private static void jabber_OnMessage(object sender, Message msg)
+        {
+            _logger.Debug(string.Format("RECV From {0}@{1} : {2}", msg.From.User, msg.From.Server, msg.Body));
+            ProcessRequest(msg);
+        }
+
+        private static bool jabber_OnRegisterInfo(object sender, Register register)
+        {
+            return true;
+        }
+
+        private static void jabber_OnRegistered(object sender, IQ iq)
+        {
+            JabberClient.Login();
+        }
+
+        private static void _presenceManager_OnPrimarySessionChange(object sender, JID bare)
+        {
+            if (bare.Bare.Equals(JabberClient.JID.Bare, StringComparison.InvariantCultureIgnoreCase))
+                return;
+        }
+
+        public static void SetupChatConnection()
+        {
             // connect. this is synchronous so we'll use a manual reset event
             // to pause this thread forever. client events will continue to
             // fire but we won't have to worry about setting up an idle "while" loop.
-            client.Connect();
-            done.WaitOne();
+            JabberClient.Connect();
+            Done.WaitOne();
         }
 
         private static void jabber_OnDisconnect(object sender)
@@ -78,7 +125,7 @@ namespace AutoBot.Cmd
         private static void jabber_OnStreamInit(object o, ElementStream elementStream)
         {
             var client = (JabberClient)o;
-            discoManager.Stream = client;
+            DiscoManager.Stream = client;
              
         }
 
@@ -88,17 +135,27 @@ namespace AutoBot.Cmd
             var client = (JabberClient) o;
         }
 
-        private static void hlp_DiscoHandler_GetItems(DiscoManager sender, DiscoNode node, object state)
+        private static void hlp_DiscoHandler_FindServiceWithFeature(DiscoManager sender, DiscoNode node, object state)
         {
-            if (node.Children != null)
-            {
-                int x = node.Children.Count;
-                foreach (jabber.connection.DiscoNode dn in node.Children)
-                {
+            if (node == null)
+                return;
+            
+            if (node.Name == "Rooms")
+                DiscoManager.BeginGetItems(node, hlp_DiscoHandler_SubscribeToRooms, new object());
+        }
 
-                    _logger.Info(dn.Name);
-                    _logger.Info(dn.Node);
-                    _logger.Info(dn.JID);
+        private static void hlp_DiscoHandler_SubscribeToRooms(DiscoManager sender, DiscoNode node, object state)
+        {
+            if (node == null)
+                return;
+            if (node.Children != null && _hipChatRooms == "@all")
+            {
+                foreach (DiscoNode dn in node.Children)
+                {
+                    _logger.Info(string.Format("Subscribing to: {0}:{1}", dn.JID, dn.Name));
+                    //We have to build a new JID here, with the nickname included http://xmpp.org/extensions/xep-0045.html#enter-muc
+                    JID subscriptionJid = new JID(dn.JID.User, dn.JID.Server, "AutoBot .");
+                    JabberClient.Subscribe(subscriptionJid, "AutoBot .", null);
                 }
             }
         }
@@ -106,15 +163,7 @@ namespace AutoBot.Cmd
         private static void jabber_OnAuthenticate(object o)
         {
             _logger.Info("Authenticated");
-            var client = (JabberClient)o;
-            string streamId = client.StreamID;
-            DiscoNode discoNode = discoManager.GetNode(client.JID);
-
-            //discoManager.Stream = stream;
-            
-            discoManager.BeginFindServiceWithFeature(URI.MUC, hlp_DiscoHandler_GetItems, new object());
-
-            //if (_hipChatRooms == "@all")
+            DiscoManager.BeginFindServiceWithFeature(URI.MUC, hlp_DiscoHandler_FindServiceWithFeature, new object());
         }
 
         private static bool jabber_OnInvalidCertificate(object o, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
@@ -133,12 +182,7 @@ namespace AutoBot.Cmd
 
         private static void jabber_OnReadText(object sender, string text)
         {
-            // ignore keep-alive spaces
-            if (text == " ") return;
-                _logger.Debug(string.Format("RECV: {0}", text));
-            // check if this is an incoming message for autobot
-            if (text.StartsWith("<message "))
-                ProcessRequest((JabberClient)sender, text);
+            _logger.Debug(string.Format("RECV: {0}", text));
         }
 
         private static void jabber_OnWriteText(object sender, string text)
@@ -148,45 +192,30 @@ namespace AutoBot.Cmd
                 _logger.Debug(string.Format("SEND: {0}", text));
         }
 
-        private static void ProcessRequest(JabberClient client, string message)
+        private static void ProcessRequest(Message message)
         {
-            // parse the message xml to extract the text the user typed.
-            // no_te that presence notifications also arrive as <message>
-            // tags so we need to look specifically for a <body> to see
-            // if it's a "real" message or not.
-            XmlDocument dom = new XmlDocument();
-            dom.LoadXml(message);
-            XmlNode body = dom.SelectSingleNode("message/body");
-            if (body == null)
+            if (message.Body == null && message.X == null)
                 return;
 
-            // get the return address / room to post the response message to
-            var replyTo = dom.SelectSingleNode("message/@from").InnerText;
+            string chatText = message.Body == null ? message.X.InnerText.Trim() : message.Body.Trim();
 
-            // work out what command was requested
-            var chatText = body.InnerText.Trim();
-            if (string.IsNullOrEmpty(chatText))
+            if (string.IsNullOrEmpty(chatText) || chatText == " ")
                 return;
 
-            if (!body.InnerText.Trim().StartsWith(string.Format("@{0} ", _hipChatBotName)))
+            //Ensure the message is intended for AutoBot
+            if (message.Type == MessageType.groupchat && !chatText.StartsWith(string.Format("@{0} ", _hipChatBotName)))
                 return;
 
-            // strip off the @autobot from the chatText
-            string[] chatTextArgs = chatText.Split(' ');
-            ArrayList arrayList = new ArrayList();
-            for (int i = 1; i < chatTextArgs.Count(); i++)
-                arrayList.Add(chatTextArgs[i]);
+            _powershellRunner.BuildPowerShellCommand(chatText, _hipChatBotName);
+            PowerShellCommand powerShellCommand = _powershellRunner.GetPowerShellCommand;
 
-            CommandLine commandLine = new CommandLine(arrayList);
-            
-            CommandLine.CheckCommandLine(commandLine);
-            
-            Command command = commandLine.GetCommand;
-            Collection<PSObject> psObjects = Powershell.RunPowershellModule(command.CommandText, command.ParameterText);
-            SendResponse(client, replyTo, psObjects);
+            Collection<PSObject> psObjects = _powershellRunner.RunPowershellModule(powerShellCommand.CommandText,
+                                                                            powerShellCommand.ParameterText);
+            JID responseJid = new JID(message.From.User, message.From.Server, message.From.Resource);
+            SendResponse(responseJid, psObjects, message.Type);
         }
 
-        private static void SendResponse(JabberClient client, string replyTo, Collection<PSObject> psObjects)
+        private static void SendResponse(JID replyTo, Collection<PSObject> psObjects, MessageType messageType)
         {
             foreach (var psObject in psObjects)
             {
@@ -204,14 +233,8 @@ namespace AutoBot.Cmd
                     foreach (DictionaryEntry dictionaryEntry in hashTable)
                         message += string.Format("{0} = {1}\n", dictionaryEntry.Key, dictionaryEntry.Value);
                 }
-
-                const string template = "<message to=\"\" type=\"chat\" from=\"\"><body></body></message>";
-                var response = new XmlDocument();
-                response.LoadXml(template);
-                response.SelectSingleNode("message/@to").InnerText = replyTo;
-                response.SelectSingleNode("message/@from").InnerText = _hipChatUsername;
-                response.SelectSingleNode("message/body").InnerText = message;
-                client.Write(response.OuterXml);
+                
+                JabberClient.Message(messageType, replyTo, message);
             }
         }
 
