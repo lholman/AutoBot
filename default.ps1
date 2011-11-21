@@ -20,6 +20,7 @@ Task default -depends Compile
 	} 
 
 	Task Compile -depends Clean {
+		Write-Output $sln_file
 		exec { & msbuild $sln_file /t:Build  /p:Configuration=Release /v:q }
 	}
 

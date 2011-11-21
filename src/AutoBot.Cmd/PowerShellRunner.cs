@@ -12,10 +12,10 @@ namespace AutoBot.Cmd
     {
         internal PowerShellCommand GetPowerShellCommand { get; private set; }
         
-        private readonly string ScriptsPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Scripts");
+        private readonly string _scriptsPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Scripts");
         private readonly ILog _logger = LogManager.GetLogger(typeof(Program));
 
-        internal Collection<PSObject> RunPowershellModule(string scriptName, string command)
+        internal Collection<PSObject> RunPowerShellModule(string scriptName, string command)
         {
 
             if (!File.Exists(GetPath(scriptName)))
@@ -73,9 +73,9 @@ namespace AutoBot.Cmd
         internal string GetPath(string filenameWithoutExtension)
         {
             string path = string.Empty;
-            if (!(ScriptsPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) || ScriptsPath.EndsWith(Path.AltDirectorySeparatorChar.ToString(), StringComparison.Ordinal)))
+            if (!(_scriptsPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) || _scriptsPath.EndsWith(Path.AltDirectorySeparatorChar.ToString(), StringComparison.Ordinal)))
             {
-                path = ScriptsPath;
+                path = _scriptsPath;
                 path += Path.DirectorySeparatorChar;
             }
             
