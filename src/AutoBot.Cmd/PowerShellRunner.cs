@@ -4,15 +4,18 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Management.Automation;
 using log4net;
+using System.Linq;
 
 namespace AutoBot.Cmd
 {
-    public class Powershell
+    public class PowerShellRunner
     {
-        private static readonly string ScriptsPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Scripts");
-        private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
+        internal PowerShellCommand GetPowerShellCommand { get; private set; }
+        
+        private readonly string ScriptsPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "Scripts");
+        private readonly ILog _logger = LogManager.GetLogger(typeof(Program));
 
-        internal static Collection<PSObject> RunPowershellModule(string scriptName, string command)
+        internal Collection<PSObject> RunPowershellModule(string scriptName, string command)
         {
 
             if (!File.Exists(GetPath(scriptName)))
@@ -67,8 +70,7 @@ namespace AutoBot.Cmd
 
         }
 
-
-        internal static string GetPath(string filenameWithoutExtension)
+        internal string GetPath(string filenameWithoutExtension)
         {
             string path = string.Empty;
             if (!(ScriptsPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal) || ScriptsPath.EndsWith(Path.AltDirectorySeparatorChar.ToString(), StringComparison.Ordinal)))
@@ -78,6 +80,39 @@ namespace AutoBot.Cmd
             }
             
             return path + filenameWithoutExtension + ".psm1";
+        }
+    
+
+        internal void BuildPowerShellCommand(string chatText, string botName)
+        {
+            string[] chatTextArgs = chatText.Split(' ');
+            string command = string.Empty;
+            string parameters = string.Empty;
+            
+            int startPosition = 0;
+            if (chatText.StartsWith(string.Format("@{0} ", botName)))
+                startPosition = 1;
+
+            command = chatTextArgs[startPosition];
+
+            for (int i = startPosition+1; i < chatTextArgs.Count(); i++)
+                parameters += chatTextArgs[i] + " ";
+
+            GetPowerShellCommand = new PowerShellCommand(command, parameters);
+        }
+
+    }   
+
+    public class PowerShellCommand
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public string CommandText { get; set; }
+        public string ParameterText { get; set; }
+
+        public PowerShellCommand(string scriptName, string parameter)
+        {
+            CommandText = scriptName;
+            ParameterText = parameter;
         }
     }
 }
