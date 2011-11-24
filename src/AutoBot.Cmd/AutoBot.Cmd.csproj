@@ -64,11 +64,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Host\AutoBotRawUserInterface.cs" />
+    <Compile Include="Host\AutoBotUserInterface.cs" />
     <Compile Include="CommandLine.cs" />
     <Compile Include="HipChat.cs" />
     <Compile Include="PowerShellRunner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Host\AutoBotHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
