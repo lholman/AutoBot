@@ -24,5 +24,5 @@ Task default -depends Compile
 
 	Task Package -depends Compile {
 		#Copy Scripts that have been dumped in the $base_dir\src\AutoBot.Cmd\Scripts file by any other means
-		exec { & xcopy $base_dir\src\AutoBot.Cmd\Scripts $base_dir\build\Scripts /S/Y/I }		
+		exec { & xcopy $base_dir\src\AutoBot\Scripts $base_dir\build\Scripts /S/Y/I }		
 	}
