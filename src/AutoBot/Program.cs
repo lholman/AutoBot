@@ -18,7 +18,7 @@ namespace AutoBot
             Environment.ExitCode = (int)CommandLine.ExitCode.Success;
             try
             {
-                AutoBot.SetupChatConnection();
+                BotEngine.SetupChatConnection();
             }
             catch (Exception ex)
             {

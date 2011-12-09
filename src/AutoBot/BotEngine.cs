@@ -1,6 +1,5 @@
 ﻿using jabber;
 using jabber.protocol.client;
-using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Configuration;
@@ -10,16 +9,15 @@ using System.Linq;
 
 namespace AutoBot
 {
-    public static class AutoBot
+    public static class BotEngine
     {
 
-        private static readonly AutoBot.HipChat.Session Session = new AutoBot.HipChat.Session();
+        private static readonly HipChatSession Session = new HipChatSession();
         private static readonly PowerShellRunner PowershellRunner;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(AutoBot.Cmd.Program));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(BotEngine));
                 
-        static AutoBot()
+        static BotEngine()
         {
-            
             Session.Server = ConfigurationManager.AppSettings["HipChatServer"];
             Session.UserName = ConfigurationManager.AppSettings["HipChatUsername"];
             Session.Password = ConfigurationManager.AppSettings["HipChatPassword"];

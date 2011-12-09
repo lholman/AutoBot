@@ -5,6 +5,19 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Management.Automation;
+<<<<<<< HEAD
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using AutoBot.Cmd;
+using jabber;
+using jabber.client;
+using jabber.connection;
+using jabber.protocol;
+using jabber.protocol.client;
+using jabber.protocol.iq;
+=======
+>>>>>>> 60bc38801d62404e809efa16eb503a8acf390589
 using log4net;
 using System.Linq;
 
@@ -13,11 +26,27 @@ namespace AutoBot
     public static class AutoBot
     {
 
+<<<<<<< HEAD
+        private static readonly ManualResetEvent Done;
+        private static readonly DiscoManager DiscoManager;
+        private static readonly ILog Logger;
+        
+        private static readonly string HipChatServer;
+        private static readonly string HipChatUsername;
+        private static readonly string HipChatPassword; 
+        private static readonly string HipChatResource;
+        private static readonly string HipChatBotMentionName;
+        private static readonly string HipChatBotNickName;
+        private static readonly string HipChatRooms;
+        
+        static AutoBot()
+=======
         private static readonly AutoBot.HipChat.Session Session = new AutoBot.HipChat.Session();
         private static readonly PowerShellRunner PowershellRunner;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(AutoBot.Cmd.Program));
                 
-        static AutoBot()
+        static HipChat()
+>>>>>>> 60bc38801d62404e809efa16eb503a8acf390589
         {
             
             Session.Server = ConfigurationManager.AppSettings["HipChatServer"];
@@ -34,7 +63,100 @@ namespace AutoBot
 
         public static void SetupChatConnection()
         {
+<<<<<<< HEAD
+            // connect. this is synchronous so we'll use a manual reset event
+            // to pause this thread forever. client events will continue to
+            // fire but we won't have to worry about setting up an idle "while" loop.
+            JabberClient.Connect();
+            Done.WaitOne();
+        }
+
+        private static void jabber_OnDisconnect(object sender)
+        {
+            Logger.Info("Disconnecting");
+        }
+
+        private static void jabber_OnStreamInit(object o, ElementStream elementStream)
+        {
+            var client = (JabberClient)o;
+            DiscoManager.Stream = client;
+             
+        }
+
+        private static void jabber_OnConnect(object o, StanzaStream s)
+        {
+            Logger.Info("Connecting");
+            var client = (JabberClient) o;
+        }
+
+        private static void hlp_DiscoHandler_FindServiceWithFeature(DiscoManager sender, DiscoNode node, object state)
+        {
+            if (node == null)
+                return;
+             
+            if (node.Name == "Rooms")
+                DiscoManager.BeginGetItems(node, hlp_DiscoHandler_SubscribeToRooms, new object());
+        }
+
+        private static void hlp_DiscoHandler_SubscribeToRooms(DiscoManager sender, DiscoNode node, object state)
+        {
+            if (node == null)
+                return;
+            if (node.Children != null && HipChatRooms == "@all")
+            {
+                foreach (DiscoNode dn in node.Children)
+                {
+                    Logger.Info(string.Format("Subscribing to: {0}:{1}", dn.JID, dn.Name));
+                    // we have to build a new JID here, with the nickname included http://xmpp.org/extensions/xep-0045.html#enter-muc
+                    JID subscriptionJid = new JID(dn.JID.User, dn.JID.Server, "AutoBot .");
+                    JabberClient.Subscribe(subscriptionJid, HipChatBotNickName, null);
+                }
+            }
+        }
+
+        private static void jabber_OnAuthenticate(object o)
+        {
+            Logger.Info("Authenticated");
+            DiscoManager.BeginFindServiceWithFeature(URI.MUC, hlp_DiscoHandler_FindServiceWithFeature, new object());
+        }
+
+        private static bool jabber_OnInvalidCertificate(object o, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+        {
+            // the current jabber server has an invalid certificate,
+            // but override validation and accept it anyway.
+            Logger.Info("Validating certificate");
+            return true;
+        }
+
+        private static void jabber_OnError(object o, Exception ex)
+        {
+            Logger.Error("ERROR!:", ex);
+            throw ex;
+        }
+
+        private static void jabber_OnReadText(object sender, string text)
+        {
+            // ignore keep-alive spaces
+            if (text == " ")
+            {
+                Logger.Debug("RECV: Keep alive");
+                return;
+            }
+            Logger.Debug(string.Format("RECV: {0}", text));
+        }
+
+        private static void jabber_OnWriteText(object sender, string text)
+        {
+            // ignore keep-alive spaces
+            if (text == " ")
+            {
+                Logger.Debug("RECV: Keep alive");
+                return;
+            }
+            Logger.Debug(string.Format("SEND: {0}", text));
+=======
             Session.Connect();
+>>>>>>> 60bc38801d62404e809efa16eb503a8acf390589
         }
 
         private static void Session_OnMessageReceived(object sender, Message message)

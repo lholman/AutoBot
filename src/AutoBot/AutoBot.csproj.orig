@@ -73,9 +73,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HipChatSession.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="HipChat\Session.cs" />
+    <Compile Include="Host\AutoBotRawUserInterface.cs" />
+    <Compile Include="Host\AutoBotUserInterface.cs" />
+>>>>>>> 60bc38801d62404e809efa16eb503a8acf390589
     <Compile Include="CommandLine.cs" />
-    <Compile Include="BotEngine.cs" />
+    <Compile Include="AutoBot.cs" />
     <Compile Include="PowerShellRunner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
