@@ -76,6 +76,9 @@
     <Compile Include="HipChatSession.cs" />
     <Compile Include="CommandLine.cs" />
     <Compile Include="BotEngine.cs" />
+    <Compile Include="Host\AutoBotHost.cs" />
+    <Compile Include="Host\AutoBotRawUserInterface.cs" />
+    <Compile Include="Host\AutoBotUserInterface.cs" />
     <Compile Include="PowerShellRunner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
