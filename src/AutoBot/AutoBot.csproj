@@ -35,8 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EasyHttp">
-      <HintPath>..\..\lib\EasyHttp.dll</HintPath>
+    <Reference Include="EasyHttp, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\packages\EasyHttp.1.4.2.0\lib\net40\EasyHttp.dll</HintPath>
     </Reference>
     <Reference Include="HipChat.Net">
       <HintPath>..\..\lib\packages\HipChat.Net.1.0\lib\net40\HipChat.Net.dll</HintPath>
@@ -44,8 +45,8 @@
     <Reference Include="jabber-net">
       <HintPath>..\..\lib\jabber-net.dll</HintPath>
     </Reference>
-    <Reference Include="JsonFx">
-      <HintPath>..\..\lib\JsonFx.dll</HintPath>
+    <Reference Include="JsonFx, Version=2.0.1106.2610, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\packages\JsonFx.2.0.1106.2610\lib\net40\JsonFx.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\lib\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
