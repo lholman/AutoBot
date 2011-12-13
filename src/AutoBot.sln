@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBot.Cmd", "AutoBot.Cmd\AutoBot.Cmd.csproj", "{CB4A56E0-B916-43ED-A1D0-1EDB50270D73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBot", "AutoBot\AutoBot.csproj", "{CB4A56E0-B916-43ED-A1D0-1EDB50270D73}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBot.UnitTests", "AutoBot.UnitTests\AutoBot.UnitTests.csproj", "{058789D3-BACE-456B-AFAC-56AE4E34C007}"
 EndProject

@@ -1,7 +1,8 @@
 ﻿using System;
+using AutoBot.Cmd;
 using log4net;
 
-namespace AutoBot.Cmd
+namespace AutoBot
 {
     class Program
     {
@@ -17,7 +18,7 @@ namespace AutoBot.Cmd
             Environment.ExitCode = (int)CommandLine.ExitCode.Success;
             try
             {
-                HipChat.SetupChatConnection();
+                BotEngine.SetupChatConnection();
             }
             catch (Exception ex)
             {

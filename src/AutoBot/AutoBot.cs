@@ -8,16 +8,16 @@ using System.Management.Automation;
 using log4net;
 using System.Linq;
 
-namespace AutoBot.Cmd
+namespace AutoBot
 {
-    public static class HipChat
+    public static class AutoBot
     {
 
         private static readonly AutoBot.HipChat.Session Session = new AutoBot.HipChat.Session();
         private static readonly PowerShellRunner PowershellRunner;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(AutoBot.Cmd.Program));
                 
-        static HipChat()
+        static AutoBot()
         {
             
             Session.Server = ConfigurationManager.AppSettings["HipChatServer"];

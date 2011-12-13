@@ -49,9 +49,9 @@
     <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoBot.Cmd\AutoBot.Cmd.csproj">
+    <ProjectReference Include="..\AutoBot\AutoBot.csproj">
       <Project>{CB4A56E0-B916-43ED-A1D0-1EDB50270D73}</Project>
-      <Name>AutoBot.Cmd</Name>
+      <Name>AutoBot</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

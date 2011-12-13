@@ -49,7 +49,7 @@ Process {
 			{
 				If ($modulename -ne "")
 				{
-					Write-Host "$modulename provided"
+					#Write-Output "$modulename provided"
 					If ($modulename -ne "Get-Help")
 					{
 						Microsoft.PowerShell.Core\Import-Module ".\Scripts\$modulename.psm1"
