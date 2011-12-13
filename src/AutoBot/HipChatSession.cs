@@ -165,8 +165,10 @@ namespace AutoBot
                 PlaintextAuth = true,
                 AutoPresence = true,
                 AutoRoster = false,
-                AutoReconnect = -1,
-                AutoLogin = true
+                AutoReconnect = 1,
+                AutoLogin = true,
+                KeepAlive = 10
+                
             };
 
             _mPresenceManager = new PresenceManager
