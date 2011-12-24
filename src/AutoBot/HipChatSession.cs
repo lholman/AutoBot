@@ -23,6 +23,7 @@ namespace AutoBot
         private DiscoManager _mDiscoManager;
         private PresenceManager _mPresenceManager;
         private ManualResetEvent _mWaiter;
+        private ConferenceManager _mConferenceManager;
 
         public string Server {get; set;}
         public string UserName {get; set;}
@@ -60,6 +61,7 @@ namespace AutoBot
         {
             var client = (JabberClient)o;
             _mDiscoManager.Stream = client;
+            _mConferenceManager.Stream = client;
         }
 
         private void jabber_OnConnect(object o, StanzaStream s)
@@ -134,7 +136,8 @@ namespace AutoBot
                     Logger.Info(string.Format("Subscribing to: {0}:{1}", dn.JID, dn.Name));
                     // we have to build a new JID here, with the nickname included http://xmpp.org/extensions/xep-0045.html#enter-muc
                     JID subscriptionJid = new JID(dn.JID.User, dn.JID.Server, "AutoBot .");
-                    _mJabberClient.Subscribe(subscriptionJid, this.NickName, null);
+                    Room room = _mConferenceManager.GetRoom(subscriptionJid);
+                    room.Join();
                 }
             }
         }
@@ -175,6 +178,8 @@ namespace AutoBot
             {
                 Stream = _mJabberClient
             };
+
+            _mConferenceManager = new ConferenceManager();
 
             _mDiscoManager = new DiscoManager();
             _mWaiter = new ManualResetEvent(false);
