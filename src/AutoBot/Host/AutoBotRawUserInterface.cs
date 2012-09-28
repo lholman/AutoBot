@@ -8,7 +8,7 @@ using System.Text;
 namespace AutoBot.Host
 {
 
-    internal class AutoBotRawUserInterface : PSHostRawUserInterface
+    public class AutoBotRawUserInterface : PSHostRawUserInterface
     {
 
         #region Fields

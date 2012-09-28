@@ -9,12 +9,12 @@ using log4net;
 namespace AutoBot.Host
 {
 
-    internal class AutoBotUserInterface: PSHostUserInterface
+    public class AutoBotUserInterface: PSHostUserInterface
     {
 
         #region Fields
 
-        private readonly ILog _logger = LogManager.GetLogger(typeof(AutoBot.Program));
+        private readonly ILog _logger = LogManager.GetLogger(typeof(Service));
 
         private PSHostRawUserInterface m_RawUI;
 
