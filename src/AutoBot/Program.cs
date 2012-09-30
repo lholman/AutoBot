@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ServiceProcess;
-using AutoBot.Cmd;
 using log4net;
 
 namespace AutoBot
@@ -17,7 +16,7 @@ namespace AutoBot
             }
             else
             {
-                Logger.Info("Starting in console mode");
+                Logger.Info("Starting Autbot in console mode");
                 try
                 {
                     BotEngine botEngine = new BotEngine();

@@ -93,7 +93,7 @@ namespace AutoBot
 
         public void Connect()
         {
-            Logger.Info(string.Format("Connecting to {0}", _jabberClient.Server));
+            Logger.Info(string.Format("Connecting to '{0}'", _jabberClient.Server));
             _jabberClient.Connect();
 
             //Continue to retry connecting
@@ -107,7 +107,7 @@ namespace AutoBot
             //Successfully authenticated
             if (_jabberClient.IsAuthenticated)
             {
-                Logger.Info(string.Format("Authenticated as {0}", _jabberClient.User));
+                Logger.Info(string.Format("Authenticated as '{0}'", _jabberClient.User));
                 _serviceStarted = true;
                 _thread.Start();
             }
@@ -115,7 +115,7 @@ namespace AutoBot
 
         public void Disconnect()
         {
-            Logger.Info(string.Format("Disconnecting from {0}", _jabberClient.Server));
+            Logger.Info(string.Format("Disconnecting from '{0}'", _jabberClient.Server));
             _jabberClient.Close();
             _serviceStarted = false;
             _thread.Join(5000);
@@ -219,7 +219,7 @@ namespace AutoBot
 
         private void jabber_OnMessage(object sender, Message msg)
         {
-            Logger.Debug(string.Format("RECV From: {0}@{1} : {2}", msg.From.User, msg.From.Server, msg.Body));
+            Logger.Debug(string.Format("RECV From: '{0}@{1}' : '{2}'", msg.From.User, msg.From.Server, msg.Body));
             this.OnMessageReceived(this, msg);
         }
 
@@ -233,9 +233,9 @@ namespace AutoBot
             _jabberClient.Login();
         }
 
-        private static void jabber_OnDisconnect(object sender)
+        private void jabber_OnDisconnect(object sender)
         {
-            Logger.Info("Disconnecting");
+            Logger.Info(string.Format("Disconnected from '{0}'", _jabberClient.Server));
 
         }
 
@@ -248,13 +248,12 @@ namespace AutoBot
 
         private void jabber_OnConnect(object o, StanzaStream s)
         {
-            Logger.Info("Connecting");
-            var client = (JabberClient)o;
+            Logger.Info(string.Format("Connected to '{0}'", _jabberClient.Server));
         }
 
         private void jabber_OnAuthenticate(object o)
         {
-            Logger.Info("Authenticated");
+            Logger.Info(string.Format("Authenticated to '{0}' as '{1}'", _jabberClient.Server, _jabberClient.User));
             _discoManager.BeginFindServiceWithFeature(URI.MUC, hlp_DiscoHandler_FindServiceWithFeature, new object());
         }
 
@@ -288,7 +287,7 @@ namespace AutoBot
             // ignore keep-alive spaces
             if (text == " ")
             {
-                Logger.Debug("RECV: Keep alive");
+                Logger.Debug("SEND: Keep alive");
                 return;
             }
             Logger.Debug(string.Format("SEND: {0}", text));
@@ -311,7 +310,7 @@ namespace AutoBot
             {
                 foreach (DiscoNode dn in node.Children)
                 {
-                    Logger.Info(string.Format("Subscribing to: {0}:{1}", dn.JID, dn.Name));
+                    Logger.Info(string.Format("Subscribing to: '{0}':'{1}' on '{2}'", dn.JID, dn.Name, _jabberClient.Server));
                     // we have to build a new JID here, with the nickname included http://xmpp.org/extensions/xep-0045.html#enter-muc
                     JID subscriptionJid = new JID(dn.JID.User, dn.JID.Server, "AutoBot .");
                     Room room = _conferenceManager.GetRoom(subscriptionJid);

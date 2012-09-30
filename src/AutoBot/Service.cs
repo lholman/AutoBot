@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 using log4net;
 
 namespace AutoBot
@@ -16,15 +17,17 @@ namespace AutoBot
 
         protected override void OnStart(string[] args)
         {
-            Logger.Info("Starting in service mode");
+            Logger.Info("Starting AutoBot Windows service");
+            
             _botEngine = new BotEngine();
-
             _botEngine.Connect();
         }
 
+
         protected override void OnStop()
         {
-            Logger.Info("Stopping from service mode");
+            Logger.Info("Stopping AutoBot Windows service");
+
             _botEngine.Disconnect();
         }
     }
