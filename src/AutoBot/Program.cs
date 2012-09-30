@@ -16,7 +16,7 @@ namespace AutoBot
             }
             else
             {
-                Logger.Info("Starting Autbot in console mode");
+                Logger.Info("Starting Autobot in console mode");
                 try
                 {
                     BotEngine botEngine = new BotEngine();
