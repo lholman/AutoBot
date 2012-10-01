@@ -20,6 +20,9 @@ _WARNING_: AutoBot is an infant and has some obvious (and other not so obvious) 
 		C:\AutoBot>build.bat
 
 ## Running Your AutoBot
++ Set PowerShell Execution policy (be sure to use the 32 Bit Powershell Command Prompt as an Administrator)
+		PS C:\>Set-ExecutionPolicy RemoteSigned
+
 + As a CommandLine App
 
 		C:\AutoBot\build\>AutoBot.Cmd.exe
