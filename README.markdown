@@ -15,7 +15,7 @@ _WARNING_: AutoBot is an infant and has some obvious (and other not so obvious) 
 
 1. Build AutoBot
 
-		C:\AutoBot>rename "src\AutoBot.Cmd\App.config.example"  "src\AutoBot.Cmd\App.config"
+		C:\AutoBot>rename "src\AutoBot\App.config.example"  "src\AutoBot\App.config"
 		
 		C:\AutoBot>build.bat
 
@@ -25,7 +25,7 @@ _WARNING_: AutoBot is an infant and has some obvious (and other not so obvious) 
 
 + As a CommandLine App
 
-		C:\AutoBot\build\>AutoBot.Cmd.exe
+		C:\AutoBot\build\>AutoBot.exe
 
 + As a Windows Service
 
