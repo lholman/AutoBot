@@ -15,7 +15,7 @@ _WARNING_: AutoBot is an infant and has some obvious (and other not so obvious) 
 
 1. Build AutoBot
 
-		C:\AutoBot>rename "src\AutoBot.Cmd\App.config.example"  "src\AutoBot.Cmd\App.config"
+		C:\AutoBot>rename "src\AutoBot\App.config.example"  "src\AutoBot\App.config"
 		
 		C:\AutoBot>build.bat
 
@@ -25,7 +25,7 @@ _WARNING_: AutoBot is an infant and has some obvious (and other not so obvious) 
 
 + As a CommandLine App
 
-		C:\AutoBot\build\>AutoBot.Cmd.exe
+		C:\AutoBot\build\>AutoBot.exe
 
 + As a Windows Service
 
@@ -35,7 +35,7 @@ _WARNING_: AutoBot is an infant and has some obvious (and other not so obvious) 
 		
 ## Scripts
 AutoBot's scripts are written in [PowerShell](http://en.wikipedia.org/wiki/Windows_PowerShell).  
-AutoBot comes with a [couple of simple scripts](https://github.com/lholman/AutoBot/tree/master/src/AutoBot.Cmd/Scripts) to get you started.  If you'd like to contribute to his library of scripts please head over to the community scripts repository at [AutoBot-Scripts](https://github.com/lholman/AutoBot-Scripts) and get scripting.
+AutoBot comes with a [couple of simple scripts](https://github.com/lholman/AutoBot/tree/master/src/AutoBot/Scripts) to get you started.  If you'd like to contribute to his library of scripts please head over to the community scripts repository at [AutoBot-Scripts](https://github.com/lholman/AutoBot-Scripts) and get scripting.
 
 ## Contributing To AutoBot Scripts
 1. Head over to [AutoBot-Scripts](https://github.com/lholman/AutoBot-Scripts)
