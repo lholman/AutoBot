@@ -1,6 +1,7 @@
 # AutoBot
 
-![codebetter.teamcity AutoBot build status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt972)/statusIcon)
+<img src=”http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt972)/statusIcon” alt="codebetter.teamcity AutoBot build status"/>
+
 
 # Introduction
 AutoBot is inspired by GitHub's splendid [HUBOT](http://hubot.github.com/) and a childhood love of [Transformers](http://en.wikipedia.org/wiki/Autobot), AutoBot however is a chat bot for the Windows crew. 
