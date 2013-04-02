@@ -49,5 +49,5 @@ AutoBot comes with a [couple of simple scripts](https://github.com/lholman/AutoB
 1. Create an [Issue](http://github.com/lholman/AutoBot/issues) with a link to your branch for everyone to discuss
 1. If your contribution is needed/wanted we will ask you to send us a [Pull Request](http://help.github.com/send-pull-requests/) and merge your changes in
 
-## Disclaimer
-NO warranty, expressed or written
+## License
+AutoBot is released under the [MIT license](http://opensource.org/licenses/MIT)
