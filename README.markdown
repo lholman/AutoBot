@@ -1,4 +1,8 @@
 # AutoBot
+
+![codebetter.teamcity AutoBot build status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt972)/statusIcon)
+
+# Introduction
 AutoBot is inspired by GitHub's splendid [HUBOT](http://hubot.github.com/) and a childhood love of [Transformers](http://en.wikipedia.org/wiki/Autobot), AutoBot however is a chat bot for the Windows crew. 
 
 + The core bot engine is written in C# (.NET 4), his functionality and extensibility is provided by the addition of PowerShell 2.0 script modules which are dynamically loaded and executed at runtime.
