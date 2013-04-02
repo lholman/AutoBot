@@ -1,6 +1,6 @@
 # AutoBot
 
-<img src=”http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt972)/statusIcon” alt="codebetter.teamcity AutoBot build status"/>
+<img src="http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt972)/statusIcon" alt="teamcity.codebetter AutoBot build status"/>
 
 
 # Introduction
